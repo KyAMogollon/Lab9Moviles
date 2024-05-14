@@ -8,11 +8,7 @@ public class PuntajeController : MonoBehaviour
 {
     [SerializeField] PlayerSO player;
     [SerializeField] TMP_Text currentPointsText;
-    [SerializeField] TMP_Text PointsText1;
-    [SerializeField] TMP_Text PointsText2;
-    [SerializeField] TMP_Text PointsText3;
-    [SerializeField] TMP_Text PointsText4;
-    [SerializeField] TMP_Text PointsText5;
+    [SerializeField] TMP_Text[] pointText;
     [SerializeField] TMP_Text NuevoRecordText;
     // Start is called before the first frame update
     void Start()
@@ -31,7 +27,10 @@ public class PuntajeController : MonoBehaviour
     }
     private void PrintPlayer()
     {
-        PointsText1.text = "Nombre: " + FireBaseConnection.Instance.dataBaseManager.dataSave.NickName + " tiene " + FireBaseConnection.Instance.dataBaseManager.dataSave.nuevoRecord;
+        for (int i = 0; i < pointText.Length; i++)
+        {
+            pointText[i].text = "Nombre: " + FireBaseConnection.Instance.dataBaseManager.dataSave.NickName + " tiene " + FireBaseConnection.Instance.dataBaseManager.dataSave.nuevoRecord;
+        }
     }
     // Update is called once per frame
     void Update()

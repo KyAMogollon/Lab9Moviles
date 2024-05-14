@@ -157,7 +157,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 332, y: -203}
+  m_AnchoredPosition: {x: 278.1, y: -203}
   m_SizeDelta: {x: 403.37, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &58002885
@@ -490,11 +490,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 11400000, guid: 861ad2d23ad1c3a44b24b9596ece0225, type: 2}
   currentPointsText: {fileID: 1342307476}
-  PointsText1: {fileID: 1790248267}
-  PointsText2: {fileID: 1090851777}
-  PointsText3: {fileID: 741938213}
-  PointsText4: {fileID: 1947849464}
-  PointsText5: {fileID: 58002886}
+  pointText:
+  - {fileID: 1790248267}
+  - {fileID: 1090851777}
+  - {fileID: 741938213}
+  - {fileID: 1947849464}
+  - {fileID: 58002886}
   NuevoRecordText: {fileID: 545194229}
 --- !u!4 &716940318
 Transform:
