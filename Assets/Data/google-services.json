@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "533205289117",
+    "firebase_url": "https://misegundofirebase-27c1c-default-rtdb.firebaseio.com",
+    "project_id": "misegundofirebase-27c1c",
+    "storage_bucket": "misegundofirebase-27c1c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533205289117:android:15b5e31c59529483ffac74",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.Lab8Moviles"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxYQ0exLYmU6n3iQDSQQVl2odAn1Ase4s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
