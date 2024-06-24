@@ -1,40 +1,58 @@
-using System.Collections;
+using Firebase.Database;
 using System.Collections.Generic;
-using System.Drawing;
-using TMPro;
 using UnityEngine;
+using System.Linq;
 
-public class PuntajeController : MonoBehaviour
+public class ScoreManager : MonoBehaviour
 {
-    [SerializeField] PlayerSO player;
-    [SerializeField] TMP_Text currentPointsText;
-    [SerializeField] TMP_Text[] pointText;
-    [SerializeField] TMP_Text NuevoRecordText;
-    // Start is called before the first frame update
+    private DatabaseReference databaseReference;
+
     void Start()
     {
-        currentPointsText.text = "Puntaje Actual: " + player.puntajeActual;
-        Debug.Log(player.nuevoRecord);
-        if (player.nuevoRecord == 0 || player.puntajeActual > player.nuevoRecord)
-        {
-            NuevoRecordText.gameObject.SetActive(true);
-            player.nuevoRecord = player.puntajeActual;
-            NuevoRecordText.text = "NuevoRecord: " + player.nuevoRecord;
-            
-        }
-        FireBaseConnection.Instance.Upload();
-        FireBaseConnection.Instance.DescargarPlayer(PrintPlayer);
+        databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
     }
-    private void PrintPlayer()
+
+    public void SaveScore(string playerName, int score)
     {
-        for (int i = 0; i < pointText.Length; i++)
-        {
-            pointText[i].text = "Nombre: " + FireBaseConnection.Instance.dataBaseManager.dataSave.NickName + " tiene " + FireBaseConnection.Instance.dataBaseManager.dataSave.nuevoRecord;
-        }
+        string key = databaseReference.Child("scores").Push().Key;
+        ScoreEntry scoreEntry = new ScoreEntry(playerName, score);
+        string json = JsonUtility.ToJson(scoreEntry);
+        databaseReference.Child("scores").Child(key).SetRawJsonValueAsync(json);
     }
-    // Update is called once per frame
-    void Update()
+
+    public void GetTopScores(int topN)
     {
-        
+        databaseReference.Child("scores").OrderByChild("score").LimitToLast(topN).GetValueAsync().ContinueWith(task =>
+        {
+            if (task.IsCompleted)
+            {
+                DataSnapshot snapshot = task.Result;
+                List<ScoreEntry> topScores = new List<ScoreEntry>();
+                foreach (DataSnapshot data in snapshot.Children)
+                {
+                    string json = data.GetRawJsonValue();
+                    ScoreEntry scoreEntry = JsonUtility.FromJson<ScoreEntry>(json);
+                    topScores.Add(scoreEntry);
+                }
+                topScores = topScores.OrderByDescending(x => x.score).ToList();
+                foreach (var score in topScores)
+                {
+                    Debug.Log($"Jugador: {score.playerName}, Puntuación: {score.score}");
+                }
+            }
+        });
+    }
+}
+
+[System.Serializable]
+public class ScoreEntry
+{
+    public string playerName;
+    public int score;
+
+    public ScoreEntry(string playerName, int score)
+    {
+        this.playerName = playerName;
+        this.score = score;
     }
 }
